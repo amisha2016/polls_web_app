@@ -1,0 +1,33 @@
+<!--
+<html>
+	<head>
+	</head>
+	<body>
+		<h1>{{question.question_text}}</h1>
+		<ul>
+			{% for i in question.choice_set.all %}
+				<li>{{ i.choice_text }}</li>
+			{% endfor %}
+		</ul>
+	</body>
+</html>
+-->
+
+<html>
+	<head>
+		<title>Choice List</title>
+	</head>
+	<body>
+		<form action="{% url 'polls:vote' question.id %}" method="post">
+		{% csrf_token %}
+			<fieldset>
+					<legend><h1>{{question.question_text}}</h1></legend>
+					{% for c in question.choice_set.all %}
+					<input type="radio" name="choice_ticked" id="choice{{ forloop.counter }}" value="{{c.id}}">
+						<label for="choice{{ forloop.counter}} ">{{ c.choice_text }}</label>
+					{% endfor %}
+			</fieldset>
+			<input type="submit" value="Vote">
+		</form>
+	</body>
+</html>
